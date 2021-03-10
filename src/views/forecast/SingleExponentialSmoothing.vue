@@ -5,63 +5,18 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-2 gap-8">
         <div>
-          <h1>Data PMB</h1>
-          <table class="table-auto border-collapse border-red-500">
-            <thead>
-              <tr>
-                <th class="bg-blue-300 border text-left px-2 py-1">No</th>
-                <th class="bg-blue-300 border text-left px-2 py-1">Tahun</th>
-                <th class="bg-blue-300 border text-left px-2 py-1">
-                  Jumlah Mahasiswa
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr v-for="(pmb, index) in pmb" :key="index">
-                <td class="border px-2 py-1">{{ index + 1 }}</td>
-                <td class="border px-2 py-1">{{ pmb.tahun }}</td>
-                <td class="border px-2 py-1">{{ pmb.jumlah }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <table-pmb :dataset="pmb" />
         </div>
         <div>
-          <div class="inline-block">
-            <p>Data Peramalan</p>
-            <button
-              @click="generateSes"
-              class="bg-black text-white rounded p-1"
-            >
-              Forecast
-            </button>
-          </div>
-
-          <table class="table-auto border-collapse border-solid">
-            <thead>
-              <tr>
-                <th class="bg-blue-100 border text-left px-2 py-1">No</th>
-                <th class="bg-blue-100 border text-left px-2 py-1">Tahun</th>
-                <th class="bg-blue-100 border text-left px-2 py-1">Jumlah</th>
-                <th class="bg-blue-100 border text-left px-2 py-1">
-                  Peramalan
-                </th>
-                <th class="bg-blue-100 border text-left px-2 py-1">
-                  Hasil Peramalan
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr v-for="(forecast, index) in forecast" :key="index">
-                <td class="border px-2 py-1">{{ index + 1 }}</td>
-                <td class="border px-2 py-1">{{ forecast.tahun }}</td>
-                <td class="border px-2 py-1">{{ forecast.jumlah }}</td>
-                <td class="border px-2 py-1">{{ forecast.forecast }}</td>
-                <td class="border px-2 py-1">{{ forecast.result }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <table-forecast :dataset="forecast1" />
+          <table-forecast :dataset="forecast2" />
+          <table-forecast :dataset="forecast3" />
+          <table-forecast :dataset="forecast4" />
+          <table-forecast :dataset="forecast5" />
+          <table-forecast :dataset="forecast6" />
+          <table-forecast :dataset="forecast7" />
+          <table-forecast :dataset="forecast8" />
+          <table-forecast :dataset="forecast9" />
         </div>
       </div>
     </div>
@@ -70,61 +25,115 @@
 
 <script>
 import pmbData from "../../utils/data";
+import TableForecast from "../../components/TableForecast.vue";
+import TablePmb from "../../components/TablePmb.vue";
 
 export default {
+  components: {
+    TableForecast,
+    TablePmb,
+  },
   data() {
     return {
       pmb: [],
       forecast: [],
-      alpha: 0.1,
+      forecast1: [],
+      forecast2: [],
+      forecast3: [],
+      forecast4: [],
+      forecast5: [],
+      forecast6: [],
+      forecast7: [],
+      forecast8: [],
+      forecast9: [],
     };
   },
   mounted() {
     this.pmb = pmbData;
+    this.generateSes();
   },
 
   methods: {
     generateSes() {
-      let bufferForecast = [];
-      pmbData.forEach((data, index) => {
-        if (index === 0) {
-          bufferForecast.push({
-            i: index,
-            tahun: data.tahun,
-            jumlah: data.jumlah,
-            forecast: data.jumlah,
-            result: data.jumlah,
-          });
-        } else if (index === 1) {
-          let last = Object.values(bufferForecast)[
-            Object.keys(bufferForecast).length - 1
-          ];
-
-          bufferForecast.push({
-            i: index,
-            tahun: data.tahun,
-            jumlah: data.jumlah,
-            forecast: last.jumlah,
-            result: last.jumlah,
-          });
-        } else {
-          let last = Object.values(bufferForecast)[
-            Object.keys(bufferForecast).length - 1
-          ];
-          let forecast = last.forecast + 0.1 * (last.jumlah - last.forecast);
-
-          bufferForecast.push({
-            i: index,
-            tahun: data.tahun,
-            jumlah: data.jumlah,
-            forecast: forecast,
-            result: Math.ceil(forecast),
-          });
+      let allForecast = [];
+      for (let index = 0.1; index < 1; index += 0.1) {
+        if (index.toFixed(1) == 1.0) {
+          continue;
         }
-      });
 
-      this.forecast = bufferForecast;
-      console.log(bufferForecast);
+        let alpha = index.toFixed(1);
+
+        let bufferForecast = [];
+        pmbData.forEach((data, index) => {
+          if (index === 0) {
+            bufferForecast.push({
+              i: index,
+              tahun: data.tahun,
+              alpha: alpha,
+              jumlah: data.jumlah,
+              forecast: "-",
+              result: "-",
+            });
+          } else if (index === 1) {
+            let last = Object.values(bufferForecast)[
+              Object.keys(bufferForecast).length - 1
+            ];
+
+            bufferForecast.push({
+              i: index,
+              tahun: data.tahun,
+              alpha: alpha,
+              jumlah: data.jumlah,
+              forecast: last.jumlah,
+              result: last.jumlah,
+            });
+          } else {
+            let last = Object.values(bufferForecast)[
+              Object.keys(bufferForecast).length - 1
+            ];
+            let forecast =
+              last.forecast + alpha * (last.jumlah - last.forecast);
+
+            bufferForecast.push({
+              i: index,
+              tahun: data.tahun,
+              alpha: alpha,
+              jumlah: data.jumlah,
+              forecast: forecast,
+              result: Math.round(forecast),
+            });
+          }
+        });
+
+        //start: hasil peramalan tahun selanjutnya
+        let predict = Object.values(bufferForecast)[
+          Object.keys(bufferForecast).length - 1
+        ];
+
+        bufferForecast.push({
+          i: predict.i + 1,
+          tahun: parseInt(predict.tahun) + 1,
+          alpha: alpha,
+          forecast:
+            predict.forecast + alpha * (predict.jumlah - predict.forecast),
+          result: Math.round(
+            predict.forecast + alpha * (predict.jumlah - predict.forecast)
+          ),
+        });
+        this.forecast = bufferForecast;
+        allForecast.push(bufferForecast);
+        //end: hasil peramalan tahun selanjutnya
+      }
+
+      this.forecast1 = allForecast[0];
+      this.forecast2 = allForecast[1];
+      this.forecast3 = allForecast[2];
+      this.forecast4 = allForecast[3];
+      this.forecast5 = allForecast[4];
+      this.forecast6 = allForecast[5];
+      this.forecast7 = allForecast[6];
+      this.forecast8 = allForecast[7];
+      this.forecast9 = allForecast[8];
     },
   },
 };
