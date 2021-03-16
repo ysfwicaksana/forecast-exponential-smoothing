@@ -15,8 +15,8 @@
       <tbody>
         <tr v-for="(pmb, index) in dataset" :key="index">
           <td class="border px-2 py-1">{{ index + 1 }}</td>
-          <td class="border px-2 py-1">{{ pmb.tahun }}</td>
-          <td class="border px-2 py-1">{{ pmb.jumlah }}</td>
+          <td class="border px-2 py-1">{{ pmb.period }}</td>
+          <td class="border px-2 py-1">{{ pmb.qty }}</td>
         </tr>
       </tbody>
     </table>

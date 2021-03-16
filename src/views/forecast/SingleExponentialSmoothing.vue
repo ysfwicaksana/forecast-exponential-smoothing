@@ -2,21 +2,66 @@
   <div>
     <h1 class="text-red-400 font-bold text-lg">Single Exponential Smoothing</h1>
     <hr />
-    <div class="container mx-auto">
+    <div class="container px-4">
       <div class="grid grid-cols-2 gap-8">
         <div>
           <table-pmb :dataset="pmb" />
         </div>
         <div>
-          <table-forecast :dataset="forecast1" />
-          <table-forecast :dataset="forecast2" />
-          <table-forecast :dataset="forecast3" />
-          <table-forecast :dataset="forecast4" />
-          <table-forecast :dataset="forecast5" />
-          <table-forecast :dataset="forecast6" />
-          <table-forecast :dataset="forecast7" />
-          <table-forecast :dataset="forecast8" />
-          <table-forecast :dataset="forecast9" />
+          <table-forecast
+            :dataset="forecast1.dataset"
+            :mse="forecast1.mse"
+            :mad="forecast1.mad"
+            :mape="forecast1.mape"
+          />
+          <table-forecast
+            :dataset="forecast2.dataset"
+            :mse="forecast2.mse"
+            :mad="forecast2.mad"
+            :mape="forecast2.mape"
+          />
+          <table-forecast
+            :dataset="forecast3.dataset"
+            :mse="forecast3.mse"
+            :mad="forecast3.mad"
+            :mape="forecast3.mape"
+          />
+          <table-forecast
+            :dataset="forecast4.dataset"
+            :mse="forecast4.mse"
+            :mad="forecast4.mad"
+            :mape="forecast4.mape"
+          />
+          <table-forecast
+            :dataset="forecast5.dataset"
+            :mse="forecast5.mse"
+            :mad="forecast5.mad"
+            :mape="forecast5.mape"
+          />
+          <table-forecast
+            :dataset="forecast6.dataset"
+            :mse="forecast6.mse"
+            :mad="forecast6.mad"
+            :mape="forecast6.mape"
+          />
+          <table-forecast
+            :dataset="forecast7.dataset"
+            :mse="forecast7.mse"
+            :mad="forecast7.mad"
+            :mape="forecast7.mape"
+          />
+          <table-forecast
+            :dataset="forecast8.dataset"
+            :mse="forecast8.mse"
+            :mad="forecast8.mad"
+            :mape="forecast8.mape"
+          />
+          <table-forecast
+            :dataset="forecast9.dataset"
+            :mse="forecast9.mse"
+            :mad="forecast9.mad"
+            :mape="forecast9.mape"
+          />
         </div>
       </div>
     </div>
@@ -24,9 +69,11 @@
 </template>
 
 <script>
-import pmbData from "../../utils/data";
+import dataset from "../../utils/dataset";
 import TableForecast from "../../components/TableForecast.vue";
 import TablePmb from "../../components/TablePmb.vue";
+import { MSE, MAD, MAPE } from "../../utils/forecast/error";
+import SES from "../../utils/forecast/exponential-smoothing/ses";
 
 export default {
   components: {
@@ -36,104 +83,124 @@ export default {
   data() {
     return {
       pmb: [],
-      forecast: [],
-      forecast1: [],
-      forecast2: [],
-      forecast3: [],
-      forecast4: [],
-      forecast5: [],
-      forecast6: [],
-      forecast7: [],
-      forecast8: [],
-      forecast9: [],
+      forecast1: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast2: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast3: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+      },
+      forecast4: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast5: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast6: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast7: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast8: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
+      forecast9: {
+        dataset: [],
+        mse: 0,
+        mad: 0,
+        mape: 0,
+      },
     };
   },
   mounted() {
-    this.pmb = pmbData;
+    this.pmb = dataset;
     this.generateSes();
   },
 
   methods: {
     generateSes() {
-      let allForecast = [];
-      for (let index = 0.1; index < 1; index += 0.1) {
-        if (index.toFixed(1) == 1.0) {
-          continue;
-        }
+      const sesResult = SES(dataset);
 
-        let alpha = index.toFixed(1);
-
-        let bufferForecast = [];
-        pmbData.forEach((data, index) => {
-          if (index === 0) {
-            bufferForecast.push({
-              i: index,
-              tahun: data.tahun,
-              alpha: alpha,
-              jumlah: data.jumlah,
-              forecast: "-",
-              result: "-",
-            });
-          } else if (index === 1) {
-            let last = Object.values(bufferForecast)[
-              Object.keys(bufferForecast).length - 1
-            ];
-
-            bufferForecast.push({
-              i: index,
-              tahun: data.tahun,
-              alpha: alpha,
-              jumlah: data.jumlah,
-              forecast: last.jumlah,
-              result: last.jumlah,
-            });
-          } else {
-            let last = Object.values(bufferForecast)[
-              Object.keys(bufferForecast).length - 1
-            ];
-            let forecast =
-              last.forecast + alpha * (last.jumlah - last.forecast);
-
-            bufferForecast.push({
-              i: index,
-              tahun: data.tahun,
-              alpha: alpha,
-              jumlah: data.jumlah,
-              forecast: forecast,
-              result: Math.round(forecast),
-            });
-          }
-        });
-
-        //start: hasil peramalan tahun selanjutnya
-        let predict = Object.values(bufferForecast)[
-          Object.keys(bufferForecast).length - 1
-        ];
-
-        bufferForecast.push({
-          i: predict.i + 1,
-          tahun: parseInt(predict.tahun) + 1,
-          alpha: alpha,
-          forecast:
-            predict.forecast + alpha * (predict.jumlah - predict.forecast),
-          result: Math.round(
-            predict.forecast + alpha * (predict.jumlah - predict.forecast)
-          ),
-        });
-        this.forecast = bufferForecast;
-        allForecast.push(bufferForecast);
-        //end: hasil peramalan tahun selanjutnya
-      }
-
-      this.forecast1 = allForecast[0];
-      this.forecast2 = allForecast[1];
-      this.forecast3 = allForecast[2];
-      this.forecast4 = allForecast[3];
-      this.forecast5 = allForecast[4];
-      this.forecast6 = allForecast[5];
-      this.forecast7 = allForecast[6];
-      this.forecast8 = allForecast[7];
-      this.forecast9 = allForecast[8];
+      this.forecast1 = {
+        dataset: sesResult[0],
+        mse: MSE(sesResult[0]),
+        mad: MAD(sesResult[0]),
+        mape: MAPE(sesResult[0]),
+      };
+      this.forecast2 = {
+        dataset: sesResult[1],
+        mse: MSE(sesResult[1]),
+        mad: MAD(sesResult[1]),
+        mape: MAPE(sesResult[1]),
+      };
+      this.forecast3 = {
+        dataset: sesResult[2],
+        mse: MSE(sesResult[2]),
+        mad: MAD(sesResult[2]),
+        mape: MAPE(sesResult[2]),
+      };
+      this.forecast4 = {
+        dataset: sesResult[3],
+        mse: MSE(sesResult[3]),
+        mad: MAD(sesResult[3]),
+        mape: MAPE(sesResult[3]),
+      };
+      this.forecast5 = {
+        dataset: sesResult[4],
+        mse: MSE(sesResult[4]),
+        mad: MAD(sesResult[4]),
+        mape: MAPE(sesResult[4]),
+      };
+      this.forecast6 = {
+        dataset: sesResult[5],
+        mse: MSE(sesResult[5]),
+        mad: MAD(sesResult[5]),
+        mape: MAPE(sesResult[5]),
+      };
+      this.forecast7 = {
+        dataset: sesResult[6],
+        mse: MSE(sesResult[6]),
+        mad: MAD(sesResult[6]),
+        mape: MAPE(sesResult[6]),
+      };
+      this.forecast8 = {
+        dataset: sesResult[7],
+        mse: MSE(sesResult[7]),
+        mad: MAD(sesResult[7]),
+        mape: MAPE(sesResult[7]),
+      };
+      this.forecast9 = {
+        dataset: sesResult[8],
+        mse: MSE(sesResult[8]),
+        mad: MAD(sesResult[8]),
+        mape: MAPE(sesResult[8]),
+      };
     },
   },
 };
