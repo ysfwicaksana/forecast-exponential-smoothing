@@ -66,9 +66,9 @@
         </th>
       </tr>
       <tr>
-        <td class="border px-2 text-xs py-1">MAD : {{ mad.toFixed(2) }}</td>
-        <td class="border px-2 text-xs py-1">MSE : {{ mse.toFixed(2) }}</td>
-        <td class="border px-2 text-xs py-1">MAPE : {{ mape }}%</td>
+        <td class="border px-2 text-xs py-1">{{ mad.toFixed(2) }}</td>
+        <td class="border px-2 text-xs py-1">{{ mse.toFixed(2) }}</td>
+        <td class="border px-2 text-xs py-1">{{ mape }}%</td>
       </tr>
     </table>
   </div>
@@ -90,8 +90,7 @@ export default {
       required: true,
     },
     mape: {
-      type: Number,
-      required: true,
+      required: true, //type: number dihilangkan karena prop terima angka decimal
     },
   },
 };
