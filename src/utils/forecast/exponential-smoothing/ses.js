@@ -15,7 +15,7 @@ const SES = (dataset) => {
           alpha: alpha,
           qty: data.qty,
           forecast: data.qty,
-          result: "-",
+          result: 0,
           mad: 0,
           mse: 0,
           mape: 0,

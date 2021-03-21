@@ -1,0 +1,3 @@
+const DESBrown = (data) => {
+  allForecast = [];
+};

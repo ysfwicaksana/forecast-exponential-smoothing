@@ -6,10 +6,19 @@ const routes = [
     path: "/",
     name: "ses",
     component: () => import("../views/forecast/SingleExponentialSmoothing.vue"),
-    meta: {
-      title: "Single Exponential Smoothing",
-    },
   },
+  {
+    path: "/ses",
+    redirect: "/",
+  },
+  {
+    path: "/des-brown",
+    name: "des-brown",
+    component: () =>
+      import("../views/forecast/DoubleExponentialSmoothingBrown.vue"),
+  },
+  { path: "/:catchAll(.*)", component: () => import("../views/Error404.vue") },
+
   // {
   //   path: '/',
   //   name: 'Home',

@@ -1,17 +1,15 @@
 <template>
   <div>
-    <h1 class="text-red-400 font-bold text-lg">Single Exponential Smoothing</h1>
-    <hr />
+    <div class="container px-4 py-4">
+      <h1 class="text-red-400 font-bold text-xl">
+        Single Exponential Smoothing
+      </h1>
+    </div>
     <div class="container px-4">
-      <table-pmb :dataset="pmb" />
-      <div class="font-semibold">
-        <b>Kesimpulan:</b>
-        Peramalan terbaik untuk PMB yakni dengan nilai alpha
-        {{ optimalAlpha }} karena memiliki nilai MSE terkecil yakni
-        {{ minimumMSE.toFixed(2) }}
-      </div>
       <div class="grid grid-cols-2 gap-8">
         <div>
+          <table-pmb :dataset="pmb" />
+
           <table-forecast
             :dataset="forecast1.dataset"
             :mse="forecast1.mse"
@@ -67,7 +65,24 @@
             :mape="forecast9.mape"
           />
         </div>
-        <div></div>
+        <div>
+          <div class="font-semibold pb-5">
+            <b>Kesimpulan:</b>
+            Peramalan terbaik untuk PMB yakni dengan nilai alpha
+            {{ optimalAlpha }} karena memiliki nilai MSE terkecil yakni
+            {{ minimumMSE.toFixed(2) }}
+          </div>
+          <apexchart
+            type="line"
+            height="350"
+            :options="chartOptions"
+            :series="chartSeries"
+          ></apexchart>
+          <p>
+            Hasil Peramalan Tahun Selanjutnya:
+            <b class="font-bold text-red-500">{{ forecastNextPeriod }}</b>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -79,17 +94,22 @@ import TableForecast from "../../components/TableForecast.vue";
 import TablePmb from "../../components/TablePmb.vue";
 import { MSE, MAD, MAPE } from "../../utils/forecast/error";
 import SES from "../../utils/forecast/exponential-smoothing/ses";
+import VueApexCharts from "vue3-apexcharts";
 
 export default {
   components: {
     TableForecast,
     TablePmb,
+    apexchart: VueApexCharts,
   },
   data() {
     return {
       pmb: [],
       optimalAlpha: 0,
       minimumMSE: 0,
+      chartOptions: [],
+      chartSeries: [],
+      forecastNextPeriod: 0,
       forecast1: {
         dataset: [],
         mse: 0,
@@ -224,6 +244,61 @@ export default {
 
       this.optimalAlpha = this.getMinimumMSE(sesResult, minMSE)[0].alpha;
       this.minimumMSE = Math.min(...minMSE);
+
+      const bestForecast = this.getPropChart(
+        this.getMinimumMSE(sesResult, minMSE)
+      );
+
+      this.forecastNextPeriod = this.getMinimumMSE(sesResult, minMSE)[
+        this.getMinimumMSE(sesResult, minMSE).length - 1
+      ].result;
+
+      this.chartSeries = [
+        {
+          name: "Data PMB",
+          type: "column",
+          data: bestForecast.realQty,
+        },
+        {
+          name: "Peramalan PMB",
+          type: "line",
+          data: bestForecast.forecastQty,
+        },
+      ];
+
+      this.chartOptions = {
+        chart: {
+          height: 350,
+          type: "line",
+        },
+        stroke: {
+          width: [0, 4],
+        },
+        title: {
+          text: "Grafik Perbandingan Data Asli Dengan Peramalan PMB",
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1],
+        },
+        labels: bestForecast.labels,
+        xaxis: {
+          type: "category",
+        },
+        yaxis: [
+          {
+            title: {
+              text: "Data PMB",
+            },
+          },
+          {
+            opposite: true,
+            title: {
+              text: "Peramalan PMB",
+            },
+          },
+        ],
+      };
     },
 
     getMinimumMSE(sesResult, minMSE) {
@@ -235,6 +310,26 @@ export default {
 
         return sesResult[i];
       }
+    },
+
+    getPropChart(dataset) {
+      let propLabel = [];
+      let propSeries1 = [];
+      let propSeries2 = [];
+
+      dataset.forEach((data, i) => {
+        if (i !== dataset.length - 1) {
+          propLabel.push(data.period);
+          propSeries1.push(data.qty);
+          propSeries2.push(data.result);
+        }
+      });
+
+      return {
+        labels: propLabel,
+        realQty: propSeries1,
+        forecastQty: propSeries2,
+      };
     },
   },
 };
