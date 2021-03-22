@@ -34,7 +34,7 @@ const SES = (dataset) => {
           result: last.qty,
           mad: data.qty - last.qty,
           mse: Math.pow(data.qty - last.qty, 2),
-          mape: (((data.qty - last.qty) / data.qty) * 100).toFixed(2),
+          mape: Math.abs((((data.qty - last.qty) / data.qty) * 100).toFixed(2)),
         });
       } else {
         let last = Object.values(bufferForecast)[
@@ -52,7 +52,7 @@ const SES = (dataset) => {
           result: Math.round(forecast),
           mad: Math.abs(data.qty - forecast).toFixed(2),
           mse: Math.pow(data.qty - forecast, 2).toFixed(2),
-          mape: (((data.qty - forecast) / data.qty) * 100).toFixed(2),
+          mape: Math.abs(((data.qty - forecast) / data.qty) * 100).toFixed(2),
         });
       }
     });
