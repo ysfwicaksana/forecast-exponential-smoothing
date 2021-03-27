@@ -12,10 +12,11 @@
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Tahun</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Jumlah</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Alpha</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">At</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">A't</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">at</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">bt</th>
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">Beta</th>
+
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">Level</th>
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">Trend</th>
+
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">
             Peramalan
           </th>
@@ -38,10 +39,7 @@
           <td class="border px-2 text-xs py-1">{{ forecast.period }}</td>
           <td class="border px-2 text-xs py-1">{{ forecast.qty }}</td>
           <td class="border px-2 text-xs py-1">{{ forecast.alpha }}</td>
-          <td class="border px-2 text-xs py-1">{{ forecast.actualT }}</td>
-          <td class="border px-2 text-xs py-1">{{ forecast.actualT2 }}</td>
-          <td class="border px-2 text-xs py-1">{{ forecast.at }}</td>
-          <td class="border px-2 text-xs py-1">{{ forecast.bt }}</td>
+          <td class="border px-2 text-xs py-1">{{ forecast.beta }}</td>
 
           <td class="border px-2 text-xs py-1">{{ forecast.forecast }}</td>
           <td class="border px-2 text-xs py-1 text-green-600 font-semibold">

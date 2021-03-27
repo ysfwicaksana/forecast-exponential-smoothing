@@ -5,85 +5,80 @@
         Double Exponential Smoothing - Brown's Linear Method
       </h1>
     </div>
-    <div class="container px-4">
-      <div class="grid grid-cols-2 gap-8">
-        <div>
-          <table-pmb :dataset="pmb" />
+    <div class="container mx-auto">
+      <table-pmb :dataset="pmb" />
 
-          <table-forecast-des
-            :dataset="forecast1.dataset"
-            :mse="forecast1.mse"
-            :mad="forecast1.mad"
-            :mape="forecast1.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast2.dataset"
-            :mse="forecast2.mse"
-            :mad="forecast2.mad"
-            :mape="forecast2.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast3.dataset"
-            :mse="forecast3.mse"
-            :mad="forecast3.mad"
-            :mape="forecast3.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast4.dataset"
-            :mse="forecast4.mse"
-            :mad="forecast4.mad"
-            :mape="forecast4.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast5.dataset"
-            :mse="forecast5.mse"
-            :mad="forecast5.mad"
-            :mape="forecast5.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast6.dataset"
-            :mse="forecast6.mse"
-            :mad="forecast6.mad"
-            :mape="forecast6.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast7.dataset"
-            :mse="forecast7.mse"
-            :mad="forecast7.mad"
-            :mape="forecast7.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast8.dataset"
-            :mse="forecast8.mse"
-            :mad="forecast8.mad"
-            :mape="forecast8.mape"
-          />
-          <table-forecast-des
-            :dataset="forecast9.dataset"
-            :mse="forecast9.mse"
-            :mad="forecast9.mad"
-            :mape="forecast9.mape"
-          />
-        </div>
-        <div>
-          <div class="font-semibold pb-5">
-            <b>Kesimpulan:</b>
-            Peramalan terbaik untuk PMB yakni dengan nilai alpha
-            {{ optimalAlpha }} karena memiliki nilai MSE terkecil yakni
-            {{ minimumMSE.toFixed(2) }}
-          </div>
-          <apexchart
-            type="line"
-            height="350"
-            :options="chartOptions"
-            :series="chartSeries"
-          ></apexchart>
-          <p>
-            Hasil Peramalan Tahun Selanjutnya:
-            <b class="font-bold text-red-500">{{ forecastNextPeriod }}</b>
-          </p>
-        </div>
+      <table-forecast-des
+        :dataset="forecast1.dataset"
+        :mse="forecast1.mse"
+        :mad="forecast1.mad"
+        :mape="forecast1.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast2.dataset"
+        :mse="forecast2.mse"
+        :mad="forecast2.mad"
+        :mape="forecast2.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast3.dataset"
+        :mse="forecast3.mse"
+        :mad="forecast3.mad"
+        :mape="forecast3.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast4.dataset"
+        :mse="forecast4.mse"
+        :mad="forecast4.mad"
+        :mape="forecast4.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast5.dataset"
+        :mse="forecast5.mse"
+        :mad="forecast5.mad"
+        :mape="forecast5.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast6.dataset"
+        :mse="forecast6.mse"
+        :mad="forecast6.mad"
+        :mape="forecast6.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast7.dataset"
+        :mse="forecast7.mse"
+        :mad="forecast7.mad"
+        :mape="forecast7.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast8.dataset"
+        :mse="forecast8.mse"
+        :mad="forecast8.mad"
+        :mape="forecast8.mape"
+      />
+      <table-forecast-des
+        :dataset="forecast9.dataset"
+        :mse="forecast9.mse"
+        :mad="forecast9.mad"
+        :mape="forecast9.mape"
+      />
+
+      <div class="font-semibold pb-5">
+        <b>Kesimpulan:</b>
+        Peramalan terbaik untuk PMB yakni dengan nilai alpha
+        {{ optimalAlpha }} karena memiliki nilai MSE terkecil yakni
+        {{ minimumMSE.toFixed(2) }}
       </div>
+      <apexchart
+        type="line"
+        height="350"
+        :options="chartOptions"
+        :series="chartSeries"
+      ></apexchart>
+      <p>
+        Hasil Peramalan Tahun Selanjutnya:
+        <b class="font-bold text-red-500">{{ forecastNextPeriod }}</b>
+      </p>
     </div>
   </div>
 </template>
@@ -270,6 +265,7 @@ export default {
         chart: {
           height: 350,
           type: "line",
+          width: 400,
         },
         stroke: {
           width: [0, 4],

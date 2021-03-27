@@ -19,14 +19,12 @@
             Hasil Peramalan
           </th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">
-            Perh. MAD
+            |Error|
           </th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">
-            Perh. MSE
+            Error<sup>2</sup>
           </th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">
-            Perh. MAPE
-          </th>
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">APE</th>
         </tr>
       </thead>
 

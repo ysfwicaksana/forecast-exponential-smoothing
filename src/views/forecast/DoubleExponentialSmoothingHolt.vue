@@ -2,61 +2,61 @@
   <div>
     <div class="container px-4 py-4">
       <h1 class="text-red-400 font-bold text-xl">
-        Single Exponential Smoothing
+        Double Exponential Smoothing - Holt Method
       </h1>
     </div>
     <div class="container mx-auto">
       <table-pmb :dataset="pmb" />
 
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast1.dataset"
         :mse="forecast1.mse"
         :mad="forecast1.mad"
         :mape="forecast1.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast2.dataset"
         :mse="forecast2.mse"
         :mad="forecast2.mad"
         :mape="forecast2.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast3.dataset"
         :mse="forecast3.mse"
         :mad="forecast3.mad"
         :mape="forecast3.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast4.dataset"
         :mse="forecast4.mse"
         :mad="forecast4.mad"
         :mape="forecast4.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast5.dataset"
         :mse="forecast5.mse"
         :mad="forecast5.mad"
         :mape="forecast5.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast6.dataset"
         :mse="forecast6.mse"
         :mad="forecast6.mad"
         :mape="forecast6.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast7.dataset"
         :mse="forecast7.mse"
         :mad="forecast7.mad"
         :mape="forecast7.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast8.dataset"
         :mse="forecast8.mse"
         :mad="forecast8.mad"
         :mape="forecast8.mape"
       />
-      <table-forecast
+      <table-forecast-des-holt
         :dataset="forecast9.dataset"
         :mse="forecast9.mse"
         :mad="forecast9.mad"
@@ -85,18 +85,13 @@
 
 <script>
 import dataset from "../../utils/dataset";
-import TableForecast from "../../components/TableForecast.vue";
 import TablePmb from "../../components/TablePmb.vue";
+import DESHolt from "../../utils/forecast/exponential-smoothing/des-holt";
+import TableForecastDesHolt from "../../components/TableForecastDesHolt";
 import { MSE, MAD, MAPE } from "../../utils/forecast/error";
-import SES from "../../utils/forecast/exponential-smoothing/ses";
 import VueApexCharts from "vue3-apexcharts";
 
 export default {
-  components: {
-    TableForecast,
-    TablePmb,
-    apexchart: VueApexCharts,
-  },
   data() {
     return {
       pmb: [],
@@ -160,92 +155,103 @@ export default {
       },
     };
   },
+
+  components: {
+    TablePmb,
+    apexchart: VueApexCharts,
+    TableForecastDesHolt,
+  },
+
   mounted() {
     this.pmb = dataset;
-    this.generateSes();
+    this.generateDesHolt();
   },
 
   methods: {
-    generateSes() {
-      //single exponential smoothing formula
-      const sesResult = SES(dataset);
+    generateDesHolt() {
+      const desHoltResult = DESHolt(dataset);
+
+      //   console.log(desHoltResult[1]);
 
       this.forecast1 = {
-        dataset: sesResult[0],
-        mse: MSE(sesResult[0]),
-        mad: MAD(sesResult[0]),
-        mape: MAPE(sesResult[0]).toFixed(2),
+        dataset: desHoltResult[0],
+        mse: MSE(desHoltResult[0]),
+        mad: MAD(desHoltResult[0]),
+        mape: MAPE(desHoltResult[0]).toFixed(2),
       };
       this.forecast2 = {
-        dataset: sesResult[1],
-        mse: MSE(sesResult[1]),
-        mad: MAD(sesResult[1]),
-        mape: MAPE(sesResult[1]).toFixed(2),
+        dataset: desHoltResult[1],
+        mse: MSE(desHoltResult[1]),
+        mad: MAD(desHoltResult[1]),
+        mape: MAPE(desHoltResult[1]).toFixed(2),
       };
+
+      console.log(this.forecast2.dataset);
+
       this.forecast3 = {
-        dataset: sesResult[2],
-        mse: MSE(sesResult[2]),
-        mad: MAD(sesResult[2]),
-        mape: MAPE(sesResult[2]).toFixed(2),
+        dataset: desHoltResult[2],
+        mse: MSE(desHoltResult[2]),
+        mad: MAD(desHoltResult[2]),
+        mape: MAPE(desHoltResult[2]).toFixed(2),
       };
       this.forecast4 = {
-        dataset: sesResult[3],
-        mse: MSE(sesResult[3]),
-        mad: MAD(sesResult[3]),
-        mape: MAPE(sesResult[3]).toFixed(2),
+        dataset: desHoltResult[3],
+        mse: MSE(desHoltResult[3]),
+        mad: MAD(desHoltResult[3]),
+        mape: MAPE(desHoltResult[3]).toFixed(2),
       };
       this.forecast5 = {
-        dataset: sesResult[4],
-        mse: MSE(sesResult[4]),
-        mad: MAD(sesResult[4]),
-        mape: MAPE(sesResult[4]).toFixed(2),
+        dataset: desHoltResult[4],
+        mse: MSE(desHoltResult[4]),
+        mad: MAD(desHoltResult[4]),
+        mape: MAPE(desHoltResult[4]).toFixed(2),
       };
       this.forecast6 = {
-        dataset: sesResult[5],
-        mse: MSE(sesResult[5]),
-        mad: MAD(sesResult[5]),
-        mape: MAPE(sesResult[5]).toFixed(2),
+        dataset: desHoltResult[5],
+        mse: MSE(desHoltResult[5]),
+        mad: MAD(desHoltResult[5]),
+        mape: MAPE(desHoltResult[5]).toFixed(2),
       };
       this.forecast7 = {
-        dataset: sesResult[6],
-        mse: MSE(sesResult[6]),
-        mad: MAD(sesResult[6]),
-        mape: MAPE(sesResult[6]).toFixed(2),
+        dataset: desHoltResult[6],
+        mse: MSE(desHoltResult[6]),
+        mad: MAD(desHoltResult[6]),
+        mape: MAPE(desHoltResult[6]).toFixed(2),
       };
       this.forecast8 = {
-        dataset: sesResult[7],
-        mse: MSE(sesResult[7]),
-        mad: MAD(sesResult[7]),
-        mape: MAPE(sesResult[7]).toFixed(2),
+        dataset: desHoltResult[7],
+        mse: MSE(desHoltResult[7]),
+        mad: MAD(desHoltResult[7]),
+        mape: MAPE(desHoltResult[7]).toFixed(2),
       };
       this.forecast9 = {
-        dataset: sesResult[8],
-        mse: MSE(sesResult[8]),
-        mad: MAD(sesResult[8]),
-        mape: MAPE(sesResult[8]).toFixed(2),
+        dataset: desHoltResult[8],
+        mse: MSE(desHoltResult[8]),
+        mad: MAD(desHoltResult[8]),
+        mape: MAPE(desHoltResult[8]).toFixed(2),
       };
 
       const minMSE = [
-        MSE(sesResult[0]),
-        MSE(sesResult[1]),
-        MSE(sesResult[2]),
-        MSE(sesResult[3]),
-        MSE(sesResult[4]),
-        MSE(sesResult[5]),
-        MSE(sesResult[6]),
-        MSE(sesResult[7]),
-        MSE(sesResult[8]),
+        MSE(desHoltResult[0]),
+        MSE(desHoltResult[1]),
+        MSE(desHoltResult[2]),
+        MSE(desHoltResult[3]),
+        MSE(desHoltResult[4]),
+        MSE(desHoltResult[5]),
+        MSE(desHoltResult[6]),
+        MSE(desHoltResult[7]),
+        MSE(desHoltResult[8]),
       ];
 
-      this.optimalAlpha = this.getMinimumMSE(sesResult, minMSE)[0].alpha;
+      this.optimalAlpha = this.getMinimumMSE(desHoltResult, minMSE)[0].alpha;
       this.minimumMSE = Math.min(...minMSE);
 
       const bestForecast = this.getPropChart(
-        this.getMinimumMSE(sesResult, minMSE)
+        this.getMinimumMSE(desHoltResult, minMSE)
       );
 
-      this.forecastNextPeriod = this.getMinimumMSE(sesResult, minMSE)[
-        this.getMinimumMSE(sesResult, minMSE).length - 1
+      this.forecastNextPeriod = this.getMinimumMSE(desHoltResult, minMSE)[
+        this.getMinimumMSE(desHoltResult, minMSE).length - 1
       ].result;
 
       this.chartSeries = [
@@ -265,6 +271,7 @@ export default {
         chart: {
           height: 350,
           type: "line",
+          width: 400,
         },
         stroke: {
           width: [0, 4],
@@ -296,14 +303,14 @@ export default {
       };
     },
 
-    getMinimumMSE(sesResult, minMSE) {
-      for (let i = 0; i < sesResult.length; i++) {
-        let mse = MSE(sesResult[i]);
+    getMinimumMSE(desHoltResult, minMSE) {
+      for (let i = 0; i < desHoltResult.length; i++) {
+        let mse = MSE(desHoltResult[i]);
         if (mse !== Math.min(...minMSE)) {
           continue;
         }
 
-        return sesResult[i];
+        return desHoltResult[i];
       }
     },
 
@@ -329,3 +336,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>

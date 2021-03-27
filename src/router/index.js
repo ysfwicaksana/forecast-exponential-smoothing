@@ -17,6 +17,12 @@ const routes = [
     component: () =>
       import("../views/forecast/DoubleExponentialSmoothingBrown.vue"),
   },
+  {
+    path: "/des-holt",
+    name: "des-holt",
+    component: () =>
+      import("../views/forecast/DoubleExponentialSmoothingHolt.vue"),
+  },
   { path: "/:catchAll(.*)", component: () => import("../views/Error404.vue") },
 
   // {

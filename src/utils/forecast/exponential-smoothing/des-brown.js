@@ -47,8 +47,8 @@ const DESBrown = (dataset) => {
           period: data.period,
           alpha: alpha,
           qty: data.qty,
-          actualT: Math.round(sumActualT).toFixed(2),
-          actualT2: Math.round(sumActualT2).toFixed(2),
+          actualT: parseFloat(sumActualT).toFixed(2),
+          actualT2: parseFloat(sumActualT2).toFixed(2),
           at: Math.round(at),
           bt: Math.round(bt),
           forecast: latestForecast.forecast,
@@ -73,8 +73,8 @@ const DESBrown = (dataset) => {
           period: data.period,
           alpha: alpha,
           qty: data.qty,
-          actualT: Math.round(sumActualT).toFixed(2),
-          actualT2: Math.round(sumActualT2).toFixed(2),
+          actualT: parseFloat(sumActualT).toFixed(2),
+          actualT2: parseFloat(sumActualT2).toFixed(2),
           at: Math.round(2 * sumActualT - sumActualT2),
           bt: Math.round((alpha / (1 - alpha)) * (sumActualT - sumActualT2)),
           forecast: latestForecast.at + latestForecast.bt,
@@ -102,7 +102,7 @@ const DESBrown = (dataset) => {
 
     bufferForecast.push({
       i: predict.i + 1,
-      period: predict.period + 1,
+      period: parseInt(predict.period) + 1,
       forecast: predict.at + predict.bt,
       result: Math.round(predict.at + predict.bt),
     });

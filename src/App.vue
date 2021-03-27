@@ -20,11 +20,11 @@
           >DES Brown</a
         >
       </router-link>
-      <!-- <router-link to="/des-brown">
-        <a class="text-lg no-underline text-white hover:text-yellow-400 mr-3"
-          >DES Brown</a
+      <router-link to="/des-holt">
+        <a class="text-md no-underline text-white hover:text-yellow-400 mr-3"
+          >DES Holt</a
         >
-      </router-link> -->
+      </router-link>
     </div>
   </nav>
   <router-view />
