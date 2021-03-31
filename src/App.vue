@@ -28,6 +28,14 @@
     </div>
   </nav>
   <router-view />
+
+  <div class="text-center font-hairline text-gray-600 p-5">
+    Created By
+    <a href="https://github.com/ysfwicaksana" class="hover:underline"
+      >Yusuf Eka Wicaksana</a
+    >
+    &copy; 2021
+  </div>
 </template>
 
 

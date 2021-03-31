@@ -171,8 +171,6 @@ export default {
     generateDesHolt() {
       const desHoltResult = DESHolt(dataset);
 
-      //   console.log(desHoltResult[1]);
-
       this.forecast1 = {
         dataset: desHoltResult[0],
         mse: MSE(desHoltResult[0]),
@@ -185,8 +183,6 @@ export default {
         mad: MAD(desHoltResult[1]),
         mape: MAPE(desHoltResult[1]).toFixed(2),
       };
-
-      console.log(this.forecast2.dataset);
 
       this.forecast3 = {
         dataset: desHoltResult[2],

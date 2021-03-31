@@ -40,6 +40,8 @@
           <td class="border px-2 text-xs py-1">{{ forecast.qty }}</td>
           <td class="border px-2 text-xs py-1">{{ forecast.alpha }}</td>
           <td class="border px-2 text-xs py-1">{{ forecast.beta }}</td>
+          <td class="border px-2 text-xs py-1">{{ forecast.level }}</td>
+          <td class="border px-2 text-xs py-1">{{ forecast.trend }}</td>
 
           <td class="border px-2 text-xs py-1">{{ forecast.forecast }}</td>
           <td class="border px-2 text-xs py-1 text-green-600 font-semibold">
