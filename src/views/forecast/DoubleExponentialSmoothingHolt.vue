@@ -171,6 +171,61 @@ export default {
     generateDesHolt() {
       const desHoltResult = DESHolt(dataset);
 
+      // console.table(desHoltResult[0]);
+
+      let currentBeta = 0;
+      let array = [];
+      let array2 = [];
+
+      for (let index = 0; index < desHoltResult[0].length; index++) {
+        if (desHoltResult[0][index].beta !== currentBeta && currentBeta !== 0) {
+          array.push(array2);
+          array2 = [];
+        }
+
+        array2.push(desHoltResult[0][index]);
+
+        currentBeta = desHoltResult[0][index].beta;
+      }
+      console.log(array);
+      // desHoltResult[0].forEach((data) => {
+      //   if (data.beta !== currentBeta && currentBeta !== 0) {
+      //     array[0].push(data);
+
+      //   }
+      //   currentBeta = data.beta;
+      // });
+
+      // let t = [];
+      // let t2 = [];
+      // for (let index = 0; index < desHoltResult[0].length; index++) {
+      //   console.log(desHoltResult[0][index]);
+      //   // if (t.length < 6) {
+      //   //   t.push(desHoltResult[0][index]);
+      //   //   console.log(t);
+      //   // }
+
+      //   // t2.push(t);
+      //   // console.log(t2);
+      // }
+
+      // console.log(t2);
+
+      // let test = [];
+      // desHoltResult[0].forEach((r) => {
+      //    if(r.i !== 0) {
+
+      //       test.push({
+      //         i  : i,
+      //         period : r.period,
+      //         alpha : r.alpha,
+      //         alpha : r.alpha,
+
+      //       })
+      //    }
+
+      // });
+
       this.forecast1 = {
         dataset: desHoltResult[0],
         mse: MSE(desHoltResult[0]),
