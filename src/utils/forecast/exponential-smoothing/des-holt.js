@@ -1,3 +1,4 @@
+// import { MSE, MAD, MAPE } from "../error";
 const DESHolt = (dataset) => {
   let allForecast = [];
 
@@ -87,21 +88,50 @@ const DESHolt = (dataset) => {
       });
     }
 
-    let predict = Object.values(bufferForecast)[
-      Object.keys(bufferForecast).length - 1
-    ];
-
-    bufferForecast.push({
-      i: predict.i + 1,
-      period: parseInt(predict.period) + 1,
-      forecast: predict.level + predict.trend,
-      result: Math.round(predict.level + predict.trend),
-    });
-
     allForecast.push(bufferForecast);
   }
 
-  return allForecast;
+  let letForecast = [];
+  allForecast.forEach((forecast) => {
+    let currentBeta = 0;
+    let arrayParsing = [];
+    let arrayParsing2 = [];
+
+    forecast.forEach((data) => {
+      if (data.beta !== currentBeta && currentBeta !== 0) {
+        arrayParsing.push(arrayParsing2);
+        arrayParsing2 = [];
+      }
+
+      currentBeta = data.beta;
+
+      arrayParsing2.push(data);
+    });
+
+    arrayParsing.push(arrayParsing2);
+
+    //forecast next year
+    arrayParsing.forEach((arr, i) => {
+      let predict = Object.values(arr)[Object.keys(arr).length - 1];
+
+      let nextForecast = {
+        i: predict.i + 1,
+        period: parseInt(predict.period) + 1,
+        // alpha: predict.alpha,
+        // beta: predict.beta,
+        // level: predict.level,
+        // trend: predict.trend,
+        forecast: predict.level + predict.trend,
+        result: Math.round(predict.level + predict.trend),
+      };
+
+      arrayParsing[i].splice(7, 0, nextForecast);
+    });
+
+    letForecast.push(arrayParsing);
+  });
+
+  return letForecast;
 };
 
 export default DESHolt;
