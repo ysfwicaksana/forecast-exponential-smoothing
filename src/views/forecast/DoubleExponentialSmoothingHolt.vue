@@ -404,7 +404,7 @@
         :mse="forecast66.mse"
         :mad="forecast66.mad"
         :mape="forecast66.mape"
-      />
+      />  
       <table-forecast-des-holt
         :dataset="forecast66.dataset"
         :mse="forecast66.mse"
