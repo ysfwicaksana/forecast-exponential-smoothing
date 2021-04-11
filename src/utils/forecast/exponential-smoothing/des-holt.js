@@ -1,4 +1,3 @@
-// import { MSE, MAD, MAPE } from "../error";
 const DESHolt = (dataset) => {
   let allForecast = [];
 
@@ -34,7 +33,9 @@ const DESHolt = (dataset) => {
             mape: 0,
           });
         } else if (i === 1) {
-          let latestForecast = Object.values(bufferForecast)[i - 1];
+          let latestForecast = Object.values(bufferForecast)[
+            Object.keys(bufferForecast).length - 1
+          ];
 
           bufferForecast.push({
             i: i,
@@ -51,8 +52,9 @@ const DESHolt = (dataset) => {
             mape: 0,
           });
         } else {
-          let latestForecast = Object.values(bufferForecast)[i - 1];
-
+          let latestForecast = Object.values(bufferForecast)[
+            Object.keys(bufferForecast).length - 1
+          ];
           let level =
             alpha * data.qty +
             (1 - alpha) * (latestForecast.level + latestForecast.trend);
@@ -77,12 +79,12 @@ const DESHolt = (dataset) => {
             mse: Math.pow(
               data.qty - (latestForecast.level + latestForecast.trend),
               2
-            ).toFixed(2),
+            ),
             mape: Math.abs(
               ((data.qty - (latestForecast.level + latestForecast.trend)) /
                 data.qty) *
                 100
-            ).toFixed(2),
+            ),
           });
         }
       });

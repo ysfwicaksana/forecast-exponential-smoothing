@@ -404,7 +404,7 @@
         :mse="forecast66.mse"
         :mad="forecast66.mad"
         :mape="forecast66.mape"
-      />  
+      />
       <table-forecast-des-holt
         :dataset="forecast66.dataset"
         :mse="forecast66.mse"
@@ -1043,7 +1043,6 @@ export default {
   methods: {
     generateDesHolt() {
       const desHoltResult = DESHolt(dataset);
-      console.log(desHoltResult);
 
       //array[0]
       this.forecast1 = {
@@ -1567,20 +1566,91 @@ export default {
         mape: MAPE(desHoltResult[8][8]).toFixed(2),
       };
 
-      //array[9]
+      const minMSE = [
+        MSE(desHoltResult[0][0]),
+        MSE(desHoltResult[0][1]),
+        MSE(desHoltResult[0][2]),
+        MSE(desHoltResult[0][3]),
+        MSE(desHoltResult[0][4]),
+        MSE(desHoltResult[0][5]),
+        MSE(desHoltResult[0][6]),
+        MSE(desHoltResult[0][7]),
+        MSE(desHoltResult[0][8]),
+        MSE(desHoltResult[1][0]),
+        MSE(desHoltResult[1][1]),
+        MSE(desHoltResult[1][2]),
+        MSE(desHoltResult[1][3]),
+        MSE(desHoltResult[1][4]),
+        MSE(desHoltResult[1][5]),
+        MSE(desHoltResult[1][6]),
+        MSE(desHoltResult[1][7]),
+        MSE(desHoltResult[1][8]),
+        MSE(desHoltResult[2][0]),
+        MSE(desHoltResult[2][1]),
+        MSE(desHoltResult[2][2]),
+        MSE(desHoltResult[2][3]),
+        MSE(desHoltResult[2][4]),
+        MSE(desHoltResult[2][5]),
+        MSE(desHoltResult[2][6]),
+        MSE(desHoltResult[2][7]),
+        MSE(desHoltResult[2][8]),
+        MSE(desHoltResult[3][0]),
+        MSE(desHoltResult[3][1]),
+        MSE(desHoltResult[3][2]),
+        MSE(desHoltResult[3][3]),
+        MSE(desHoltResult[3][4]),
+        MSE(desHoltResult[3][5]),
+        MSE(desHoltResult[3][6]),
+        MSE(desHoltResult[3][7]),
+        MSE(desHoltResult[3][8]),
+        MSE(desHoltResult[4][0]),
+        MSE(desHoltResult[4][1]),
+        MSE(desHoltResult[4][2]),
+        MSE(desHoltResult[4][3]),
+        MSE(desHoltResult[4][4]),
+        MSE(desHoltResult[4][5]),
+        MSE(desHoltResult[4][6]),
+        MSE(desHoltResult[4][7]),
+        MSE(desHoltResult[4][8]),
+        MSE(desHoltResult[5][0]),
+        MSE(desHoltResult[5][1]),
+        MSE(desHoltResult[5][2]),
+        MSE(desHoltResult[5][3]),
+        MSE(desHoltResult[5][4]),
+        MSE(desHoltResult[5][5]),
+        MSE(desHoltResult[5][6]),
+        MSE(desHoltResult[5][7]),
+        MSE(desHoltResult[5][8]),
+        MSE(desHoltResult[6][0]),
+        MSE(desHoltResult[6][1]),
+        MSE(desHoltResult[6][2]),
+        MSE(desHoltResult[6][3]),
+        MSE(desHoltResult[6][4]),
+        MSE(desHoltResult[6][5]),
+        MSE(desHoltResult[6][6]),
+        MSE(desHoltResult[6][7]),
+        MSE(desHoltResult[6][8]),
+        MSE(desHoltResult[7][0]),
+        MSE(desHoltResult[7][1]),
+        MSE(desHoltResult[7][2]),
+        MSE(desHoltResult[7][3]),
+        MSE(desHoltResult[7][4]),
+        MSE(desHoltResult[7][5]),
+        MSE(desHoltResult[7][6]),
+        MSE(desHoltResult[7][7]),
+        MSE(desHoltResult[7][8]),
+        MSE(desHoltResult[8][0]),
+        MSE(desHoltResult[8][1]),
+        MSE(desHoltResult[8][2]),
+        MSE(desHoltResult[8][3]),
+        MSE(desHoltResult[8][4]),
+        MSE(desHoltResult[8][5]),
+        MSE(desHoltResult[8][6]),
+        MSE(desHoltResult[8][7]),
+        MSE(desHoltResult[8][8]),
+      ];
 
-      // const minMSE = [
-      //   MSE(desHoltResult[0]),
-      //   MSE(desHoltResult[1]),
-      //   MSE(desHoltResult[2]),
-      //   MSE(desHoltResult[3]),
-      //   MSE(desHoltResult[4]),
-      //   MSE(desHoltResult[5]),
-      //   MSE(desHoltResult[6]),
-      //   MSE(desHoltResult[7]),
-      //   MSE(desHoltResult[8]),
-      // ];
-
+      console.log(Math.min(...minMSE));
       // this.optimalAlpha = this.getMinimumMSE(desHoltResult, minMSE)[0].alpha;
       // this.minimumMSE = Math.min(...minMSE);
 

@@ -60,7 +60,9 @@ const DESBrown = (dataset) => {
           ),
         });
       } else {
-        const latestForecast = Object.values(bufferForecast)[i - 1];
+        const latestForecast = Object.values(bufferForecast)[
+          Object.keys(bufferForecast).length - 1
+        ];
 
         const sumActualT =
           alpha * data.qty + (1 - alpha) * latestForecast.actualT;
