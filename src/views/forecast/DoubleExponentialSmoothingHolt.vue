@@ -504,8 +504,9 @@
 
       <div class="font-semibold pb-5">
         <b>Kesimpulan:</b>
-        Peramalan terbaik untuk PMB yakni dengan nilai alpha
-        {{ optimalAlpha }} karena memiliki nilai MSE terkecil yakni
+        Peramalan terbaik untuk PMB yakni dengan nilai alfa
+        {{ optimalAlpha }} dan nilai beta {{ optimalBeta }} karena memiliki
+        nilai MSE terkecil yakni
         {{ minimumMSE.toFixed(2) }}
       </div>
       <apexchart
@@ -535,6 +536,7 @@ export default {
     return {
       pmb: [],
       optimalAlpha: 0,
+      optimalBeta: 0,
       minimumMSE: 0,
       chartOptions: [],
       chartSeries: [],
@@ -1566,6 +1568,8 @@ export default {
         mape: MAPE(desHoltResult[8][8]).toFixed(2),
       };
 
+      //
+
       const minMSE = [
         MSE(desHoltResult[0][0]),
         MSE(desHoltResult[0][1]),
@@ -1650,75 +1654,162 @@ export default {
         MSE(desHoltResult[8][8]),
       ];
 
-      console.log(Math.min(...minMSE));
-      // this.optimalAlpha = this.getMinimumMSE(desHoltResult, minMSE)[0].alpha;
-      // this.minimumMSE = Math.min(...minMSE);
+      const holtArray = [
+        desHoltResult[0][0],
+        desHoltResult[0][1],
+        desHoltResult[0][2],
+        desHoltResult[0][3],
+        desHoltResult[0][4],
+        desHoltResult[0][5],
+        desHoltResult[0][6],
+        desHoltResult[0][7],
+        desHoltResult[0][8],
+        desHoltResult[1][0],
+        desHoltResult[1][1],
+        desHoltResult[1][2],
+        desHoltResult[1][3],
+        desHoltResult[1][4],
+        desHoltResult[1][5],
+        desHoltResult[1][6],
+        desHoltResult[1][7],
+        desHoltResult[1][8],
+        desHoltResult[2][0],
+        desHoltResult[2][1],
+        desHoltResult[2][2],
+        desHoltResult[2][3],
+        desHoltResult[2][4],
+        desHoltResult[2][5],
+        desHoltResult[2][6],
+        desHoltResult[2][7],
+        desHoltResult[2][8],
+        desHoltResult[3][0],
+        desHoltResult[3][1],
+        desHoltResult[3][2],
+        desHoltResult[3][3],
+        desHoltResult[3][4],
+        desHoltResult[3][5],
+        desHoltResult[3][6],
+        desHoltResult[3][7],
+        desHoltResult[3][8],
+        desHoltResult[4][0],
+        desHoltResult[4][1],
+        desHoltResult[4][2],
+        desHoltResult[4][3],
+        desHoltResult[4][4],
+        desHoltResult[4][5],
+        desHoltResult[4][6],
+        desHoltResult[4][7],
+        desHoltResult[4][8],
+        desHoltResult[5][0],
+        desHoltResult[5][1],
+        desHoltResult[5][2],
+        desHoltResult[5][3],
+        desHoltResult[5][4],
+        desHoltResult[5][5],
+        desHoltResult[5][6],
+        desHoltResult[5][7],
+        desHoltResult[5][8],
+        desHoltResult[6][0],
+        desHoltResult[6][1],
+        desHoltResult[6][2],
+        desHoltResult[6][3],
+        desHoltResult[6][4],
+        desHoltResult[6][5],
+        desHoltResult[6][6],
+        desHoltResult[6][7],
+        desHoltResult[6][8],
+        desHoltResult[7][0],
+        desHoltResult[7][1],
+        desHoltResult[7][2],
+        desHoltResult[7][3],
+        desHoltResult[7][4],
+        desHoltResult[7][5],
+        desHoltResult[7][6],
+        desHoltResult[7][7],
+        desHoltResult[7][8],
+        desHoltResult[8][0],
+        desHoltResult[8][1],
+        desHoltResult[8][2],
+        desHoltResult[8][3],
+        desHoltResult[8][4],
+        desHoltResult[8][5],
+        desHoltResult[8][6],
+        desHoltResult[8][7],
+        desHoltResult[8][8],
+      ];
 
-      // const bestForecast = this.getPropChart(
-      //   this.getMinimumMSE(desHoltResult, minMSE)
-      // );
+      const { alpha, beta } = this.getMinimumMSE(holtArray, minMSE)[0];
 
-      // this.forecastNextPeriod = this.getMinimumMSE(desHoltResult, minMSE)[
-      //   this.getMinimumMSE(desHoltResult, minMSE).length - 1
-      // ].result;
+      this.optimalAlpha = alpha;
+      this.optimalBeta = beta;
 
-      // this.chartSeries = [
-      //   {
-      //     name: "Data PMB",
-      //     type: "column",
-      //     data: bestForecast.realQty,
-      //   },
-      //   {
-      //     name: "Peramalan PMB",
-      //     type: "line",
-      //     data: bestForecast.forecastQty,
-      //   },
-      // ];
+      this.minimumMSE = Math.min(...minMSE);
 
-      // this.chartOptions = {
-      //   chart: {
-      //     height: 350,
-      //     type: "line",
-      //     width: 400,
-      //   },
-      //   stroke: {
-      //     width: [0, 4],
-      //   },
-      //   title: {
-      //     text: "Grafik Perbandingan Data Asli Dengan Peramalan PMB",
-      //   },
-      //   dataLabels: {
-      //     enabled: true,
-      //     enabledOnSeries: [1],
-      //   },
-      //   labels: bestForecast.labels,
-      //   xaxis: {
-      //     type: "category",
-      //   },
-      //   yaxis: [
-      //     {
-      //       title: {
-      //         text: "Data PMB",
-      //       },
-      //     },
-      //     {
-      //       opposite: true,
-      //       title: {
-      //         text: "Peramalan PMB",
-      //       },
-      //     },
-      //   ],
-      // };
+      const bestForecast = this.getPropChart(
+        this.getMinimumMSE(holtArray, minMSE)
+      );
+
+      this.forecastNextPeriod = this.getMinimumMSE(holtArray, minMSE)[
+        this.getMinimumMSE(holtArray, minMSE).length - 1
+      ].result;
+
+      this.chartSeries = [
+        {
+          name: "Data PMB",
+          type: "column",
+          data: bestForecast.realQty,
+        },
+        {
+          name: "Peramalan PMB",
+          type: "line",
+          data: bestForecast.forecastQty,
+        },
+      ];
+
+      this.chartOptions = {
+        chart: {
+          height: 350,
+          type: "line",
+          width: 400,
+        },
+        stroke: {
+          width: [0, 4],
+        },
+        title: {
+          text: "Grafik Perbandingan Data Asli Dengan Peramalan PMB",
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1],
+        },
+        labels: bestForecast.labels,
+        xaxis: {
+          type: "category",
+        },
+        yaxis: [
+          {
+            title: {
+              text: "Data PMB",
+            },
+          },
+          {
+            opposite: true,
+            title: {
+              text: "Peramalan PMB",
+            },
+          },
+        ],
+      };
     },
 
-    getMinimumMSE(desHoltResult, minMSE) {
-      for (let i = 0; i < desHoltResult.length; i++) {
-        let mse = MSE(desHoltResult[i]);
+    getMinimumMSE(holt, minMSE) {
+      for (let i = 0; i < holt.length; i++) {
+        let mse = MSE(holt[i]);
         if (mse !== Math.min(...minMSE)) {
           continue;
         }
 
-        return desHoltResult[i];
+        return holt[i];
       }
     },
 
