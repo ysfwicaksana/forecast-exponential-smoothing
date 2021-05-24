@@ -23,6 +23,11 @@ const routes = [
     component: () =>
       import("../views/forecast/DoubleExponentialSmoothingHolt.vue"),
   },
+  {
+    path: "/tes",
+    name: "tes",
+    component: () => import("../views/forecast/TripleExponentialSmoothing.vue"),
+  },
   { path: "/:catchAll(.*)", component: () => import("../views/Error404.vue") },
 
   // {
