@@ -1,3 +1,6 @@
+/**
+ *  variable actualT = S't, actualT2 = S't
+ */
 const DESBrown = (dataset) => {
   let allForecast = [];
   for (let index = 0.1; index < 1; index += 0.1) {
@@ -9,11 +12,13 @@ const DESBrown = (dataset) => {
     let bufferForecast = [];
     dataset.forEach((data, i) => {
       if (i === 0) {
-        const sumbt =
-          (dataset[1].qty -
-            dataset[0].qty +
-            (dataset[3].qty - dataset[2].qty)) /
-          2;
+        // const sumbt =
+        //   (dataset[1].qty -
+        //     dataset[0].qty +
+        //     (dataset[3].qty - dataset[2].qty)) /
+        //   2;
+
+        // const sumbt =
         bufferForecast.push({
           i: i,
           period: data.period,
@@ -22,8 +27,8 @@ const DESBrown = (dataset) => {
           actualT: data.qty,
           actualT2: data.qty,
           at: data.qty,
-          bt: sumbt,
-          forecast: data.qty + sumbt,
+          bt: 0,
+          forecast: data.qty + 0,
           result: 0,
           mad: 0,
           mse: 0,
@@ -50,7 +55,7 @@ const DESBrown = (dataset) => {
           actualT: sumActualT,
           actualT2: sumActualT2,
           at: Math.round(at),
-          bt: Math.round(bt),
+          bt: bt,
           forecast: latestForecast.forecast,
           result: Math.round(latestForecast.forecast),
           mad: data.qty - latestForecast.qty,
