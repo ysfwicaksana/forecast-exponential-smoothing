@@ -1,2 +1,2 @@
 # forecast-exponential-smoothing
-Single, Double &amp; Triple Exponential Smoothing
+Single, Double Exponential Smoothing (Brown's Method), Double Exponential Smoothing (Holt's Method)
