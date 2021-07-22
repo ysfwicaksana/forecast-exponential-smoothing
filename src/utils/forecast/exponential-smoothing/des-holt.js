@@ -18,24 +18,12 @@ const DESHolt = (dataset) => {
 
       dataset.forEach((data, i) => {
         if (i === 0) {
-          bufferForecast.push({
-            i: i,
-            period: data.period,
-            alpha: alpha,
-            beta: beta,
-            qty: data.qty,
-            level: 0,
-            trend: 0,
-            forecast: 0,
-            result: 0,
-            mad: 0,
-            mse: 0,
-            mape: 0,
-          });
-        } else if (i === 1) {
-          let latestForecast = Object.values(bufferForecast)[
-            Object.keys(bufferForecast).length - 1
-          ];
+          const level0 = alpha * data.qty;
+          const trend0 =
+            (dataset[1].qty -
+              dataset[0].qty +
+              (dataset[3].qty - dataset[2].qty)) /
+            2;
 
           bufferForecast.push({
             i: i,
@@ -43,8 +31,8 @@ const DESHolt = (dataset) => {
             alpha: alpha,
             beta: beta,
             qty: data.qty,
-            level: data.qty,
-            trend: data.qty - latestForecast.qty,
+            level: level0,
+            trend: trend0,
             forecast: 0,
             result: 0,
             mad: 0,
@@ -135,5 +123,26 @@ const DESHolt = (dataset) => {
 
   return letForecast;
 };
+
+// else if (i === 1) {
+//           let latestForecast = Object.values(bufferForecast)[
+//             Object.keys(bufferForecast).length - 1
+//           ];
+
+//           bufferForecast.push({
+//             i: i,
+//             period: data.period,
+//             alpha: alpha,
+//             beta: beta,
+//             qty: data.qty,
+//             level: data.qty,
+//             trend: data.qty - latestForecast.qty,
+//             forecast: 0,
+//             result: 0,
+//             mad: 0,
+//             mse: 0,
+//             mape: 0,
+//           });
+//         }
 
 export default DESHolt;

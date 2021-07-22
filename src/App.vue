@@ -25,11 +25,6 @@
           >DES Holt</a
         >
       </router-link>
-      <router-link to="/tes">
-        <a class="text-md no-underline text-white hover:text-yellow-400 mr-3"
-          >TES</a
-        >
-      </router-link>
     </div>
   </nav>
   <router-view />
@@ -42,5 +37,3 @@
     &copy; 2021
   </div>
 </template>
-
-

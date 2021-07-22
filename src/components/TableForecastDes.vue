@@ -12,8 +12,8 @@
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Tahun</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Jumlah</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">Alpha</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">At</th>
-          <th class="bg-blue-100 border text-left text-xs px-2 py-1">A't</th>
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">S't</th>
+          <th class="bg-blue-100 border text-left text-xs px-2 py-1">S''t</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">at</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">bt</th>
           <th class="bg-blue-100 border text-left text-xs px-2 py-1">
@@ -103,5 +103,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
